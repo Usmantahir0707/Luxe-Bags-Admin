@@ -19,7 +19,7 @@ export default function Home() {
   useEffect(()=>{
     const getData = async ()=>{
       try{
-        const orderData = await fetch("http://localhost:5000/api/orders", {
+        const orderData = await fetch("https://luxe-bags-server.onrender.com/api/orders", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     })
