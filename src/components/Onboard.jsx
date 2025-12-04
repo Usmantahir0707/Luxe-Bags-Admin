@@ -8,7 +8,7 @@ export default function Onboard() {
   useEffect(() => {
     const token = localStorage.getItem("bags-token");
 
-    fetch("http://localhost:5000/api/auth/me", {
+    fetch("https://luxe-bags-server.onrender.com/api/auth/me", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     })

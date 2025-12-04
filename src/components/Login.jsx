@@ -35,7 +35,7 @@ export default function Login() {
     const validated = validateForm();
     if (validated) {
       setLoading(true)
-      fetch("http://localhost:5000/api/auth/login", {
+      fetch("https://luxe-bags-server.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
