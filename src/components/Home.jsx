@@ -11,39 +11,67 @@ import { useLocation } from "react-router-dom";
 
 export default function Home() {
   const [active, setActive] = useState("dashboard");
-  const [orders, setOrders] = useState([])
-  const location = useLocation()
-  const token = location.state.token
+  const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState([]);
+  const [products, setProducts] = useState({});
+  const [users, setUsers] = useState([]);
+  const location = useLocation();
+  const token = location.state.token;
 
-   // getting data
-  useEffect(()=>{
-    const getData = async ()=>{
-      try{
-        const orderData = await fetch("https://luxe-bags-server.onrender.com/api/orders", {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      const orderRes = await orderData.json()
-      console.log(orderRes)
-      setOrders(orderRes)
+  // getting data
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        // all orders
+        const orderData = await fetch(
+          "https://luxe-bags-server.onrender.com/api/orders",
+          {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        const orderRes = await orderData.json();
+        setOrders(orderRes);
+
+        // all products
+        const productData = await fetch(
+          "https://luxe-bags-server.onrender.com/api/products"
+        );
+        const productRes = await productData.json();
+        setProducts(productRes);
+
+        // all users
+        const usersData = await fetch(
+          "https://luxe-bags-server.onrender.com/api/auth/users",
+          {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        const usersRes = await usersData.json();
+        setUsers(usersRes);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
       }
-      
-      catch(err){
-        console.log(err)
-      }
-    }
-    getData()
-  }, [])
-
-
-
+    };
+    getData();
+  }, []);
 
   const renderScreen = () => {
     switch (active) {
       case "dashboard":
-        return <Dashboard />;
+        return (
+          <Dashboard
+            ordersTotal={orders.length}
+            productsTotal={products.count}
+            usersTotal={users.length}
+            loading={loading}
+          />
+        );
       case "orders":
-        return <Orders orders={orders} setOrders={setOrders}/>;
+        return <Orders orders={orders} setOrders={setOrders} />;
       case "products":
         return <Products />;
       case "users":

@@ -1,23 +1,28 @@
 import { motion } from "framer-motion";
 import { ShoppingBag, Package, Users } from "lucide-react";
 
-export default function Dashboard() {
+export default function Dashboard({
+  ordersTotal,
+  productsTotal,
+  usersTotal,
+  loading,
+}) {
   const cards = [
     {
       title: "Total Orders",
-      value: "1,245",
+      value: ordersTotal,
       icon: <ShoppingBag size={26} />,
       color: "from-blue-500 to-blue-700",
     },
     {
       title: "Products",
-      value: "350",
+      value: productsTotal,
       icon: <Package size={26} />,
       color: "from-purple-500 to-purple-700",
     },
     {
       title: "Users",
-      value: "980",
+      value: usersTotal,
       icon: <Users size={26} />,
       color: "from-orange-500 to-orange-700",
     },
@@ -39,7 +44,23 @@ export default function Dashboard() {
 
           <div>
             <p className="text-gray-600">{c.title}</p>
-            <p className="text-2xl font-bold">{c.value}</p>
+
+            {loading ? (
+              <motion.div
+                className={`w-5 h-5 border-4 border-gray-300 rounded-full
+                  ${c.title === 'Total Orders' && 'border-t-blue-500'}
+                  ${c.title === 'Products' && 'border-t-purple-500'}
+                  ${c.title === 'Users' && 'border-t-orange-500'}`}
+                animate={{ rotate: 360 }}
+                transition={{
+                  repeat: Infinity,
+                  ease: "linear",
+                  duration: 1,
+                }}
+              />
+            ) : (
+              <p className="text-2xl font-bold">{c.value}</p>
+            )}
           </div>
         </motion.div>
       ))}

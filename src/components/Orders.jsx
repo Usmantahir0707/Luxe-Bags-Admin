@@ -6,7 +6,7 @@ import OrderStatusBadge from "./OrderStatusBadge";
 export default function Orders({orders, setOrders}) {
   const [selected, setSelected] = useState(null);
   const [search, setSearch] = useState("");
-
+ console.log(orders)
   const onUpdateStatus = (id, status) => {
     setOrders((prev) =>
       prev.map((o) => (o._id === id ? { ...o, status } : o))

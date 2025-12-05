@@ -125,7 +125,7 @@ URL: /api/orders
 Body (JSON):
 
 {
-  "customerName": "John Doe",
+  "customerName": "qwerty Doe",
   "customerEmail": "john@example.com",
   "customerPhone": "+1234567890",
   "shippingAddress": {

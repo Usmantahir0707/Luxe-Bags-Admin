@@ -9,39 +9,13 @@ import {
   Package2,
 } from "lucide-react";
 
-export default function Products() {
+export default function Products({products, setProducts}) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
   const [addOpen, setAddOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
 
-  // Demo products
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      title: "Classic Leather Bag",
-      price: 120,
-      stock: 15,
-      category: "leather",
-      image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3",
-    },
-    {
-      id: 2,
-      title: "Luxury Brown Tote",
-      price: 180,
-      stock: 8,
-      category: "tote",
-      image: "https://images.unsplash.com/photo-1584917865306-fd1f5c1192a0",
-    },
-    {
-      id: 3,
-      title: "Premium Handbag",
-      price: 200,
-      stock: 5,
-      category: "premium",
-      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
-    },
-  ]);
+  console.log(products)
 
   const filtered = products.filter((p) =>
     (filter === "all" || p.category === filter) &&
