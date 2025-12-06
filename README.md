@@ -280,7 +280,7 @@ Upload Image (Admin Only) ****
 
 Method: POST
 
-URL: /api/uploads
+URL: /api/upload
 
 Headers: Authorization: Bearer <admin-token>
 

@@ -13,7 +13,7 @@ export default function Home() {
   const [active, setActive] = useState("dashboard");
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
-  const [products, setProducts] = useState({});
+  const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
   const location = useLocation();
   const token = location.state.token;
@@ -38,7 +38,8 @@ export default function Home() {
           "https://luxe-bags-server.onrender.com/api/products"
         );
         const productRes = await productData.json();
-        setProducts(productRes);
+        console.log(productRes)
+        setProducts(productRes.data);
 
         // all users
         const usersData = await fetch(
@@ -65,15 +66,15 @@ export default function Home() {
         return (
           <Dashboard
             ordersTotal={orders.length}
-            productsTotal={products.count}
+            productsTotal={products.length}
             usersTotal={users.length}
             loading={loading}
           />
         );
       case "orders":
-        return <Orders orders={orders} setOrders={setOrders} />;
+        return <Orders orders={orders} setOrders={setOrders} token={token}/>;
       case "products":
-        return <Products />;
+        return <Products products={products} setProducts={setProducts} token={token}/>;
       case "users":
         return <Users />;
       case "settings":
