@@ -50,7 +50,8 @@ export default function Home() {
           }
         );
         const usersRes = await usersData.json();
-        setUsers(usersRes);
+        setUsers(()=> usersRes.filter((f)=> f.role !== 'admin'));
+        console.log(users)
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -76,7 +77,7 @@ export default function Home() {
       case "products":
         return <Products products={products} setProducts={setProducts} token={token}/>;
       case "users":
-        return <Users />;
+        return <Users users={users} setUsers={setUsers} token={token}/>;
       case "settings":
         return <Settings />;
       default:

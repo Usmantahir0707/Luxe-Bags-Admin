@@ -1,38 +1,11 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Search, Filter, User, Smartphone } from "lucide-react";
 
-export default function Users() {
+export default function Users({users, setUsers, token}) {
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
 
-  // SAMPLE DATA (replace with real API later)
-  const users = [
-    {
-      id: "U-001",
-      name: "John Doe",
-      email: "john@example.com",
-      phone: "+92 300 1234567",
-      role: "customer",
-      joined: "2024-11-01",
-    },
-    {
-      id: "U-002",
-      name: "Sarah Ali",
-      email: "s.ali@example.com",
-      phone: "+92 321 9988776",
-      role: "admin",
-      joined: "2024-10-15",
-    },
-    {
-      id: "U-003",
-      name: "Hamza Khan",
-      email: "h.khan@example.com",
-      phone: "+92 302 5566778",
-      role: "customer",
-      joined: "2025-01-11",
-    },
-  ];
 
   // FILTER + SEARCH
   const filteredUsers = useMemo(() => {
