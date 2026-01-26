@@ -1,69 +1,70 @@
 import { motion } from "framer-motion";
-import { ShoppingBag, Package, Users } from "lucide-react";
+import EcommerceMetrics from "./dashboard/EcommerceMetrics";
+import MonthlySalesChart from "./dashboard/MonthlySalesChart";
+import StatisticsChart from "./dashboard/StatisticsChart";
+import MonthlyTarget from "./dashboard/MonthlyTarget";
+import RecentOrders from "./dashboard/RecentOrders";
+import DemographicCard from "./dashboard/DemographicCard";
 
 export default function Dashboard({
   ordersTotal,
   productsTotal,
   usersTotal,
   loading,
+  orders = [],
+  products = [],
+  users = []
 }) {
-  const cards = [
-    {
-      title: "Total Orders",
-      value: ordersTotal,
-      icon: <ShoppingBag size={26} />,
-      color: "from-blue-500 to-blue-700",
-    },
-    {
-      title: "Products",
-      value: productsTotal,
-      icon: <Package size={26} />,
-      color: "from-purple-500 to-purple-700",
-    },
-    {
-      title: "Users",
-      value: usersTotal,
-      icon: <Users size={26} />,
-      color: "from-orange-500 to-orange-700",
-    },
-  ];
-
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-      {cards.map((c) => (
-        <motion.div
-          key={c.title}
-          whileHover={{ scale: 1.02 }}
-          className="p-6 rounded-xl shadow-md bg-white border flex items-center gap-4"
-        >
-          <div
-            className={`p-4 rounded-xl bg-linear-to-br ${c.color} text-white shadow-lg`}
-          >
-            {c.icon}
-          </div>
+    <div className="grid grid-cols-12 gap-4 md:gap-6">
+      {/* Left Column - Metrics and Sales Chart */}
+      <div className="col-span-12 space-y-6 xl:col-span-7">
+        <EcommerceMetrics
+          ordersTotal={ordersTotal}
+          productsTotal={productsTotal}
+          usersTotal={usersTotal}
+          loading={loading}
+        />
 
-          <div>
-            <p className="text-gray-600">{c.title}</p>
+        <MonthlySalesChart
+          orders={orders}
+          loading={loading}
+        />
+      </div>
 
-            {loading ? (
-              <motion.div
-                className={`w-5 h-5 border-4 border-gray-300 rounded-full
-                  ${c.title === 'Total Orders' && 'border-t-blue-500'}
-                  ${c.title === 'Products' && 'border-t-purple-500'}
-                  ${c.title === 'Users' && 'border-t-orange-500'}`}
-                animate={{ rotate: 360 }}
-                transition={{
-                  repeat: Infinity,
-                  ease: "linear",
-                  duration: 1,
-                }}
-              />
-            ) : (
-              <p className="text-2xl font-bold">{c.value}</p>
-            )}
-          </div>
-        </motion.div>
-      ))}
+      {/* Right Column - Monthly Target */}
+      <div className="col-span-12 xl:col-span-5">
+        <MonthlyTarget
+          orders={orders}
+          loading={loading}
+        />
+      </div>
+
+      {/* Full Width - Statistics */}
+      <div className="col-span-12">
+        <StatisticsChart
+          orders={orders}
+          products={products}
+          users={users}
+          loading={loading}
+        />
+      </div>
+
+      {/* Left Column - Demographics */}
+      <div className="col-span-12 xl:col-span-5">
+        <DemographicCard
+          users={users}
+          loading={loading}
+        />
+      </div>
+
+      {/* Right Column - Recent Orders */}
+      <div className="col-span-12 xl:col-span-7">
+        <RecentOrders
+          orders={orders}
+          loading={loading}
+        />
+      </div>
     </div>
   );
 }

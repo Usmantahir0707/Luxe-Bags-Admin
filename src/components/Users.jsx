@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Search, Filter, User, Smartphone } from "lucide-react";
+import { Search, Filter, User } from "lucide-react";
 
 export default function Users({users, setUsers, token}) {
   const [search, setSearch] = useState("");
@@ -13,7 +13,6 @@ export default function Users({users, setUsers, token}) {
       const matchSearch =
         u.name.toLowerCase().includes(search.toLowerCase()) ||
         u.email.toLowerCase().includes(search.toLowerCase()) ||
-        u.phone.includes(search) ||
         u.id.toLowerCase().includes(search.toLowerCase());
 
       const matchRole =
@@ -42,7 +41,7 @@ export default function Users({users, setUsers, token}) {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
           <input
             type="text"
-            placeholder="Search by name, email, phone or ID..."
+            placeholder="Search by name, email or ID..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-10 p-3 rounded-lg bg-white shadow-sm border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -84,10 +83,6 @@ export default function Users({users, setUsers, token}) {
             </div>
 
             <div className="mt-4 space-y-2">
-              <p className="flex items-center gap-2 text-gray-700 text-sm">
-                <Smartphone size={18} className="text-gray-500" />
-                {user.phone}
-              </p>
               <p className="text-sm text-gray-500">User ID: {user.id}</p>
 
               <span
@@ -102,7 +97,7 @@ export default function Users({users, setUsers, token}) {
             </div>
 
             <div className="mt-4 text-xs text-gray-400">
-              Joined: {user.joined}
+              Joined: {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
             </div>
           </motion.div>
         ))}

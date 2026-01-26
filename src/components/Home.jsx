@@ -6,7 +6,7 @@ import Orders from "./Orders";
 import Products from "./Products";
 import Users from "./Users";
 import Settings from "./Settings";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
 export default function Home() {
@@ -70,12 +70,15 @@ export default function Home() {
             productsTotal={products.length}
             usersTotal={users.length}
             loading={loading}
+            orders={orders}
+            products={products}
+            users={users}
           />
         );
       case "orders":
-        return <Orders orders={orders} setOrders={setOrders} token={token}/>;
+        return <Orders orders={orders} setOrders={setOrders} token={token} loading={loading}/>;
       case "products":
-        return <Products products={products} setProducts={setProducts} token={token}/>;
+        return <Products products={products} setProducts={setProducts} token={token} loading={loading}/>;
       case "users":
         return <Users users={users} setUsers={setUsers} token={token}/>;
       case "settings":
@@ -86,20 +89,21 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
       <Sidebar active={active} setActive={setActive} />
 
-      <div className="flex flex-col flex-1 overflow-hidden">
+      <div className="flex flex-col flex-1 overflow-hidden lg:ml-[290px]">
         <Header />
 
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="p-6 overflow-auto pb-20 md:pb-6"
-        >
-          {renderScreen()}
-        </motion.div>
+        <main className="flex-1 overflow-auto p-6 pb-20 md:pb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            {renderScreen()}
+          </motion.div>
+        </main>
       </div>
     </div>
   );

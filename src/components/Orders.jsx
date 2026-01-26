@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import OrderDetails from "./OrderDetails";
 import OrderStatusBadge from "./OrderStatusBadge";
 
-export default function Orders({ orders, setOrders, token }) {
+export default function Orders({ orders, setOrders, token, loading = false }) {
   const [selected, setSelected] = useState(null);
   const [search, setSearch] = useState("");
 
@@ -19,6 +19,43 @@ export default function Orders({ orders, setOrders, token }) {
       o._id.toLowerCase().includes(search.toLowerCase()) ||
       o.customerPhone.includes(search)
   );
+
+  if (loading) {
+    return (
+      <div className="w-full p-4 md:p-6">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 bg-white p-4 rounded-2xl shadow-lg">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+            Orders
+          </h1>
+          <div className="loading-skeleton h-12 w-full md:w-96 rounded-2xl"></div>
+        </div>
+
+        <div className="bg-white shadow-xl rounded-3xl overflow-hidden border">
+          <div className="hidden md:grid grid-cols-6 bg-gray-100 px-6 py-4 text-sm font-bold text-gray-800 uppercase tracking-wide">
+            <p>ID</p>
+            <p>Customer</p>
+            <p>Phone</p>
+            <p>Status</p>
+            <p>Total</p>
+            <p className="text-right">Actions</p>
+          </div>
+
+          <div className="space-y-4 p-6">
+            {Array(5).fill(0).map((_, index) => (
+              <div key={index} className="grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                <div className="loading-skeleton h-4 w-full rounded"></div>
+                <div className="loading-skeleton h-4 w-full rounded"></div>
+                <div className="loading-skeleton h-4 w-full rounded"></div>
+                <div className="loading-skeleton h-4 w-16 rounded"></div>
+                <div className="loading-skeleton h-4 w-12 rounded"></div>
+                <div className="loading-skeleton h-10 w-20 rounded-xl ml-auto"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full p-4 md:p-6">
@@ -89,7 +126,7 @@ export default function Orders({ orders, setOrders, token }) {
               </div>
 
               {/* Total */}
-              <p className="font-semibold">${o.totalPrice}</p>
+              <p className="font-semibold">PKR {o.totalPrice}</p>
 
               {/* View Button */}
               <div className="text-right flex md:block justify-end">

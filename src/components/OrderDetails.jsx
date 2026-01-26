@@ -23,11 +23,11 @@ export default function OrderDetails({ order, onClose, onUpdateStatus, token }) 
           const data = await res.json();
           if (!res.ok) {
             results.push({ ...item, name: item.name || "Unknown product" });
-          } else {
+        } else {
             results.push({
               ...item,
               name: data.data.name,
-              image: data.data.images?.[0] || null,
+              image: data.data.image || null,
             });
           }
         } catch {
@@ -161,7 +161,7 @@ export default function OrderDetails({ order, onClose, onUpdateStatus, token }) 
                   <p className="text-sm text-gray-600">Qty: {p.quantity}</p>
                 </div>
 
-                <p className="font-semibold">${p.price}</p>
+                <p className="font-semibold">PKR {p.price}</p>
               </div>
             ))}
           </div>
@@ -170,7 +170,7 @@ export default function OrderDetails({ order, onClose, onUpdateStatus, token }) 
         {/* Total */}
         <div>
           <p className="text-gray-400 text-xs">Total Amount</p>
-          <p className="text-2xl font-bold">${order.totalPrice}</p>
+          <p className="text-2xl font-bold">PKR {order.totalPrice}</p>
         </div>
 
         {/* Status Update */}

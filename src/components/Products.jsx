@@ -41,7 +41,7 @@ const ModalWrapper = ({ children, onClose }) => (
   </motion.div>
 );
 
-export default function Products({ products, setProducts, token }) {
+export default function Products({ products, setProducts, token, loading = false }) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
   const [addOpen, setAddOpen] = useState(false);
@@ -363,6 +363,52 @@ export default function Products({ products, setProducts, token }) {
     }));
   };
 
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        {/* HEADER SKELETON */}
+        <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
+          <div className="loading-skeleton h-8 w-48 rounded-lg"></div>
+          <div className="loading-skeleton h-10 w-32 rounded-xl"></div>
+        </div>
+
+        {/* FILTER BAR SKELETON */}
+        <div className="flex flex-col md:flex-row justify-between gap-4">
+          <div className="loading-skeleton h-12 w-full md:w-1/2 rounded-xl"></div>
+          <div className="loading-skeleton h-12 w-48 rounded-xl"></div>
+        </div>
+
+        {/* PRODUCT GRID SKELETON */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {Array(8).fill(0).map((_, index) => (
+            <div key={index} className="bg-white shadow-lg rounded-2xl overflow-hidden flex flex-col">
+              <div className="loading-skeleton h-40 w-full"></div>
+              <div className="p-4 space-y-3 flex-1 flex flex-col">
+                <div className="loading-skeleton h-6 w-3/4 rounded"></div>
+                <div className="loading-skeleton h-4 w-1/2 rounded"></div>
+                <div className="loading-skeleton h-4 w-1/3 rounded"></div>
+                <div className="loading-skeleton h-4 w-1/4 rounded"></div>
+                <div className="flex justify-between items-center pt-2 mt-auto">
+                  <div className="loading-skeleton h-5 w-16 rounded-full"></div>
+                  <div className="flex gap-2">
+                    <div className="loading-skeleton h-8 w-8 rounded-full"></div>
+                    <div className="loading-skeleton h-8 w-8 rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* LOADING INDICATOR */}
+        <div className="flex flex-col items-center justify-center gap-4 pt-8">
+          <div className="loading-spinner"></div>
+          <p className="text-gray-500 dark:text-gray-400 animate-pulse">Loading products...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* HEADER */}
@@ -448,7 +494,7 @@ export default function Products({ products, setProducts, token }) {
                   </div>
                 </div>
 
-                <p className="text-gray-600 font-bold">${product.price}</p>
+                <p className="text-gray-600 font-bold">PKR {product.price}</p>
                 <p className="text-sm text-gray-500">
                   Stock: <span className="font-semibold">{product.stock}</span>
                 </p>
@@ -838,7 +884,7 @@ export default function Products({ products, setProducts, token }) {
                 <div className="grid grid-cols-2 gap-4">
                   <DetailItem label="Price">
                     <span className="font-bold text-green-600">
-                      ${detailProduct.price}
+                      PKR {detailProduct.price}
                     </span>
                   </DetailItem>
                   <DetailItem label="Stock">
