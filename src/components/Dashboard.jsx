@@ -4,7 +4,6 @@ import MonthlySalesChart from "./dashboard/MonthlySalesChart";
 import StatisticsChart from "./dashboard/StatisticsChart";
 import MonthlyTarget from "./dashboard/MonthlyTarget";
 import RecentOrders from "./dashboard/RecentOrders";
-import DemographicCard from "./dashboard/DemographicCard";
 
 export default function Dashboard({
   ordersTotal,
@@ -45,14 +44,6 @@ export default function Dashboard({
         <StatisticsChart
           orders={orders}
           products={products}
-          users={users}
-          loading={loading}
-        />
-      </div>
-
-      {/* Left Column - Demographics */}
-      <div className="col-span-12 xl:col-span-5">
-        <DemographicCard
           users={users}
           loading={loading}
         />
